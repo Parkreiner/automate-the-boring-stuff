@@ -1,11 +1,14 @@
+
 # Chapter 4 Notes
 
 ## The List Data Type
+
 Lists are interesting, as unlike a language like C, Python allows you to put multiple data types in the same list.
 
 However, using a list index that lies outside the list will result in an error.
 
 ## Negative Indexes
+
 Python allows you to use negative indexes, which refer to elements in the list, starting from the right. So, -1 will
 refer to the very last element, -2 will refer to the element to the left of that, and so on.
 
@@ -13,18 +16,20 @@ Basically, think of negative index values as being the length of the array plus 
 length 5, an index of -1 will subtract 1 from the length, resulting in 4. The highest index in the array is 4, so the
 value at that index gets printed.
 
-## Getting Sublists with Slices
+## Getting Sub-lists with Slices
+
 A slice allows you to get multiple values from a list by turning them into a new list. The notation is pretty similar to
 basic array or list notation – you’re using integers as indexes – but you need two integers, separated by a colon.
 
 And just like with the range function, the first value will be included, but not the second one. It’ll count up to that
 value.
 
-You can also omit values in the slice. You can omit both values, but that’s the equivalent of the original array. If you
-omit the first value, that’s equivalent to setting it to 0. If you omit the second value, that’s equivalent to setting
-it to the length of the array.
+You can also omit values in the slice. You can omit both values, but that’s the equivalent of the original array. If
+you omit the first value, that’s equivalent to setting it to 0. If you omit the second value, that’s equivalent to
+setting it to the length of the array.
 
 ### Using slices to create separate copies of lists
+
 You would think that omitting both values would be pointless, as that would just be equivalent to the original list, but
 that's exactly the point. By default, `newList = originalList` will just have `newList` point at `originalList`. So, any
 operations performed on the former will actually be done on the latter. Since slices return new lists instead of
@@ -32,30 +37,36 @@ modifying the original, `newList = originalList[:]` will give `newList` a separa
 just a reference.
 
 ## List Concatenation and List Replication
+
 When you use the `+` and `*` operators on lists, it’s not that different from using them on strings.
 
 Using `+` will create a new combined array:
+
 ```python
 >>> print([0, 1, 2] + [3, 4, 5])
 [0, 1, 2, 3, 4, 5]
 ```
 
 Using `*` will add multiple copies of that array to itself.
+
 ```python
 >>> [0, 1] * 3
 [0, 1, 0, 1, 0, 1]
 ```
 
 ## Using the `del` keyword for List Items and regular variables
+
 You can use the `del` keyword to delete an element at a specific index of a list. When you do, any elements that came
 after will be moved up one index.
 
-You can also use it to delete an actual variable. All further references to that variable will result in a `NameError`
-– it will be as if that variable never existed.
+You can also use it to delete a primitive variable (that isn't inside a list). All further references to that variable
+will result in a `NameError` – it will be as if that variable never existed.
 
 ## Working with Lists
+
 Whenever you catch yourself making very similar variables, either in function or theme, then you might want to consider
 turning them into a list.
+
 ```python
 catName1 = 'Zophie'
 catName2 = 'Pooka'
@@ -66,12 +77,14 @@ catName6 = 'Miss Cleo'
 ```
 
 The above can easily be turned into a list of cat names. And if the order of the names ever matters, you can do a lot
-more with lists than with unconnected variables. Plus, there is a number of problems with that implementation:
+more with lists than with unconnected variables. Plus, the above approach just has some real problems:
+
 * No easy way to add extra cat names
 * Writing repetitive code like this almost always results in repetitive code elsewhere, particular code that handles it
 
 Getting user input for all those cats would be a huge hassle, but when you use a list, you can approach things more
 programmatically, even including support for an arbitrary number of cats:
+
 ```python
 catNames = []
 while True:
@@ -80,7 +93,7 @@ while True:
 
     if name == "":
         break
-    
+
     catNames = catNames.append(name)
 
 print("The names of all the cats are:")
@@ -89,6 +102,7 @@ for name in catNames:
 ```
 
 ## Using `for` loops with lists
+
 So, it seems that technically, the `for` keyword *only* works on lists and list-like values. When you do something like
 `for i in range(3)`, that `range(3)` is creating a new list-like value. `for i in [0, 1, 2]` has the exact same
 functionality.
@@ -97,6 +111,7 @@ functionality.
 the book goes into them in too much depth.
 
 Perhaps the most common use for looping over a list is doing something with the value at each index:
+
 ```python
 x = [0, 1, 2]
 for i in range(len(x)):
@@ -105,13 +120,15 @@ for i in range(len(x)):
 
 The above form is useful when you need to refer to the indexes of each item, but when you don't, you can also use this
 more straight-forward form:
+
 ```python
 x = ["A", "B", "C"]
 for i in x:
-    print(i) # Can access the values in order, but it's basically impossible to use math with them
+    print(i) # Can access the values in order, but it's basically impossible to use math with the indexes
 ```
 
 ## The `in` and `not in` operators
+
 The `in` and `not in`* operators are quick and convenient ways of checking if a value exists within a list. Both return
 boolean values.
 
@@ -120,13 +137,16 @@ boolean values.
 >>> "Boy" in junk
 True
 ```
+
 \* It seems that `not in` just exists for convenience. `a not in b` should be equal to `not (a in b)`.
 
 ## The multiple assignment trick
+
 Python provides a very convenient shorthand if you're pulling values from a list to assign to variables. However, the
 length of the list must be equal to the number of variables being assigned.
 
 Instead of this:
+
 ```python
 letters = ["A", "B", "C"]
 x = letters[0]
@@ -135,12 +155,14 @@ z = letters[2]
 ```
 
 You can do this:
+
 ```python
 letters = ["A", "B", "C"]
 x, y, z = letters
 ```
 
 But these won't work:
+
 ```python
 letters = ["A", "B", "C"]
 x, y = letters
@@ -150,6 +172,7 @@ x, y, z = letters
 ```
 
 And just in general, you can use multiple assignment to swap values of variables
+
 ```python
 >>> a, b = "Alice", "Bob"
 >>> a, b = b, a
@@ -160,11 +183,13 @@ And just in general, you can use multiple assignment to swap values of variables
 ```
 
 ## Augmented Assignment Operators
+
 Augmented assignment operators provide shorthand for updating an existing value. However, Python does not support `++`
 or `--` notation, though it does support literally everything else. It even has an augmented operator for integer
 division, which is more than JS can say.
 
-#### The operators
+### The operators
+
 * `x += y`
 * `x -= y`
 * `x *= y`
@@ -175,11 +200,13 @@ division, which is more than JS can say.
 You can even use `+=` and `*=` on strings and lists. They'll do concatenation and replication, respectively.
 
 ## Methods
+
 A method is just a function that belongs to a value and that can be called in terms of that value. For example, the
-`index()` method in `exampleList.index("value that you want to find the index of")`. All primitives have their own
+`index()` method in `exampleList.index( <value that you want to find the index of> )`. All primitives have their own
 methods, all of which are designed to make manipulating those primitives easier.
 
 ## Finding a value with the `index()` method
+
 The `.index()` method allows you to find the index where a value is placed in a list. If the value exists in the list,
 then the method will return an integer equal to the index. If it doesn't exist, then the method won't return something
 like `-1`; it'll just give you a `ValueError`.
@@ -188,6 +215,7 @@ If the value you're looking for appears multiple times, then the method will jus
 found.
 
 ## Adding values to lists with the `.append()` and `.insert()` methods
+
 The `.append()` method is basically the same as running the `+=` operator on a list. However, there is a slight
 difference. `[1] + [2]` results in `[1, 2]` – the values from the second list are plucked out and placed at the end of
 the first one. However, `[1].append([2])` results in `[1, [2]]` – the second list is kept intact, and the entire thing
@@ -203,17 +231,20 @@ index. This does mean that it needs two values.
 [12, 1, 2]
 ```
 
-**Just make sure to never do this**
+**Just make sure to never do this:**
+
 ```python
 >>> example = example.append("Some text")
 >>> example = example.insert(0, "Some other text")
 ```
+
 The methods themselves don't have return values. That's because they modify the original list instead of creating a new
 one. If you try to set a variable to one of these methods, you'll get a value of `None`.
 
 Also, these methods are exclusive to lists. If you try using them on other value types, you'll get an `AttributeError`.
 
 ## Removing values from lists with `.remove()`
+
 The list `.remove()` method is basically a more sophisticated version of using `del`. It doesn't require you to know the
 specific index of a value – only that it exists somewhere in the list variable.
 
@@ -224,16 +255,18 @@ specific index of a value – only that it exists somewhere in the list variable
 ["cat", "rat", "elephant"]
 ```
 
-If you try removing a value that does not exist, you'll get a `ValueError`. On the flipside, removing a value that
+If you try removing a value that does not exist, you'll get a `ValueError`. On the flip side, removing a value that
 appears multiple times will only remove the first instance.
 
 ### `.remove()` vs `del`
+
 Both operations are great for deleting values, but they do have different uses. `del` is great when you know the index
 of the value you want to delete, but not necessarily what that value is. `.remove()` is great when you know what value
 you want to delete, but not necessarily where it's located (though things do get muddier when you have multiple
 instances of the same value in an array).
 
 ## Sorting list elements with `.sort()`
+
 The `.sort()` method allows you to arrange list elements of a similar type "in order" and in place. For numerical
 values, this will arrange them from least to greatest. For alphabetical elements, they'll be sorted lexicographically*.
 However, you can't use the method when your list contains a variety of values, such as numbers and strings.
@@ -244,14 +277,17 @@ element, then the method will look at the next element in each until it finds a 
 inside the list of lists you're trying to sort, then it will always be considered first.
 
 You can also make the method return your elements in reverse order through the `reverse=True` argument.
+
 ```python
 >>> [1, 2, 3].sort(reverse=True)
 [3, 2, 1]
 ```
 
 ### Overriding default lexicographic order
+
 Just as a reminder, in lexicographic order, uppercase letters come before lowercase ones. This means that you'll get
 this when you have a mix of string cases:
+
 ```python
 >>> ["A", "a", "B", "b", "C", "c"].sort()
 ["A", "B", "C", "a", "b", "c"]
@@ -264,7 +300,7 @@ all-lowercase while it's sorting.
 
 ```python
 >>> test1 = ["A", "a", "B", "c", "C", "b"]
->>> test1.sort(key=str.lower)
+>>> test1.sort(key=str.lower) # test1 basically becomes ["a", "a", "b", "c", "c", "b"]
 ['A', 'a', 'B', 'b', 'c', 'C']
 
 >>> test2 = ["Ab", "aB", "AB", "ab"]
@@ -272,4 +308,134 @@ all-lowercase while it's sorting.
 ['Ab', 'aB', 'AB', 'ab']
 ```
 
-## Example Program
+## Example Program: Magic 8 Ball with a Twist
+
+This is a pretty succinct way of implementing a magic 8 ball:
+
+```python
+messages = ["It is certain.",
+    "It it decidedly so.",
+    "Yes, definitely",
+    "Reply hazy. Try asking later.",
+    "Concentrate and ask again",
+    'My reply is "No".',
+    "Outlook ain't too great",
+    "Most doubtful"
+]
+
+print(messages[random.randint(0, len(messages) - 1)])
+
+```
+
+## Exceptions to Python's indenting rules
+
+Most of the time, Python is very indentation-based. This means that code that's indented at the same level will tend to
+be part of the same block. There are some exceptions, though.
+
+For example, lists can span multiple lines and can have any amount of spacing between them. Python will know not to act
+as if the list is finished until it sees the closing bracket `]`.
+
+But there is something else. When splitting any kind of statement across multiple lines, you can use `\` to indicate
+that the statement extends to the next line. Some parts of the language do this automatically, but not again `\` can be
+used with **everything**.
+
+These two are identical:
+
+```python
+print("This code is being split across " + \
+      "multiple lines.")
+
+print("This code is being split across " + # No \ - Also, placing comments like this is valid Python
+      "multiple lines.")
+```
+
+But these two aren't:
+
+```python
+# Works perfectly fine
+if 0 == \
+    0:
+    print("Equal")
+
+# Results in SyntaxError; the conditional is treated as incomplete
+if 0 == 
+    0:
+    print("Equal")
+```
+
+## List-Like Types: Strings and Tuples
+
+It's important to note that lists aren't the only way of ordering information. Strings, after all, are just arrays/lists
+of characters. Because of this, you can apply most of the methods to strings that you can to generic lists: indexing,
+slicing, iterating over them, getting their `len()`, and being used with the `in` and `not` operators.
+
+```python
+>>> name = "Bugger"
+>>> "bug" in name
+False
+>>> "Bug" in name
+True
+"A" not in name
+True
+>>> for i in name:
+>>>     print("* * * " + i.upper() + " * * *")
+* * * Z * * *
+* * * O * * *
+* * * P * * *
+* * * H * * *
+* * * I * * *
+* * * E * * *
+```
+
+## Mutable and Immutable Data Types
+
+However, even though strings are basically lists, they don't behave exactly the same. In C, all arrays are immutable,
+both regular arrays and strings. But even though the creators of Python modified arrays to be mutable when they turned
+them into lists, they didn't do the same for strings. So there's a bit of an inconsistency: strings are not mutable
+under any circumstances. Try to change a character, and you'll get a `TypeError` back.
+
+If you want to modify a string, you'll have to slice the parts you want to keep and combine them with the parts you want
+to add.
+
+```python
+>>> ungrammaticalName = "Zophie a Cat"
+>>> fixedName = ungrammaticalName[:7] + "the" + ungrammaticalName[8:]
+>>> fixedName
+"Zophie the Cat"
+```
+
+In the above example, `ungrammaticalName` remains unchanged. You could do something like the below, though. It'll have
+the `name` variable container point at new string, leaving the old one to be garbage collected.
+
+```python
+>>> name = "Zophie a Cat"
+>>> name = name[:7] + "the" + name[8:]
+>>> name
+"Zophie the Cat"
+```
+
+And just because lists are mutable doesn't mean they'll be mutated every time you change their values. When you do
+something like this:
+
+```python
+>>> eggs = [1, 2, 3]
+>>> eggs = [4, 5, 6]
+>>> eggs
+[4, 5, 6]
+```
+
+You aren't modifying the old list. Instead, you're just creating a replacement and assigning the variable to it. If you
+wanted to mutate the original list into the new one, you'd have to do something like this:
+
+```python
+>>> eggs = [1, 2, 3]
+>>> while len(eggs) != 0:
+>>>     del eggs[0]
+>>> eggs += [4, 5, 6]
+>>> eggs
+[4, 5, 6]
+```
+
+Which is quite a bit more verbose, especially if you don't use loops or if you add the new elements individually.
+
+## The Tuple Data Type
