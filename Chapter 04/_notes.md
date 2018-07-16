@@ -31,10 +31,10 @@ setting it to the length of the array.
 ### Using slices to create separate copies of lists
 
 You would think that omitting both values would be pointless, as that would just be equivalent to the original list, but
-that's exactly the point. By default, `newList = originalList` will just have `newList` point at `originalList`. So, any
-operations performed on the former will actually be done on the latter. Since slices return new lists instead of
-modifying the original, `newList = originalList[:]` will give `newList` a separate copy of the original list, instead of
-just a reference.
+that's exactly the point. By default, `newList = originalList` will have `newList` and `originalList` point at the same
+value – the `=` operator will be reference-based, not value-based. So, any operations performed on one will affect both.
+Since slices return new lists instead of modifying the original, `newList = originalList[:]` will have `newList` point
+at a separate copy.
 
 ## List Concatenation and List Replication
 
@@ -80,7 +80,7 @@ The above can easily be turned into a list of cat names. And if the order of the
 more with lists than with unconnected variables. Plus, the above approach just has some real problems:
 
 * No easy way to add extra cat names
-* Writing repetitive code like this almost always results in repetitive code elsewhere, particular code that handles it
+* Writing repetitive code like this almost always results in repetitive code elsewhere, particularly the code that handles it
 
 Getting user input for all those cats would be a huge hassle, but when you use a list, you can approach things more
 programmatically, even including support for an arbitrary number of cats:
@@ -104,8 +104,7 @@ for name in catNames:
 ## Using `for` loops with lists
 
 So, it seems that technically, the `for` keyword *only* works on lists and list-like values. When you do something like
-`for i in range(3)`, that `range(3)` is creating a new list-like value. `for i in [0, 1, 2]` has the exact same
-functionality.
+`for i in range(3)`, that `range(3)` is creating a new list-like value. `for i in [0, 1, 2]` works similarly.
 
 **The technical term for the "list-like value" the author keeps referring to is a sequence**, but it doesn't seem like
 the book goes into them in too much depth.
@@ -207,16 +206,13 @@ methods, all of which are designed to make manipulating those primitives easier.
 
 ## Finding a value with the `index()` method
 
-The `.index()` method allows you to find the index where a value is placed in a list. If the value exists in the list,
-then the method will return an integer equal to the index. If it doesn't exist, then the method won't return something
-like `-1`; it'll just give you a `ValueError`.
-
-If the value you're looking for appears multiple times, then the method will just return the first index where it can be
-found.
+The `.index()` method returns the value of the first index where the method's argument can be found. However, if the
+argument can't be found, the method won't return `-1`.  Instead, it will give you a `ValueError`, so be careful when
+using it.
 
 ## Adding values to lists with the `.append()` and `.insert()` methods
 
-The `.append()` method is basically the same as running the `+=` operator on a list. However, there is a slight
+The `.append()` method is basically the same as running the `+` or `+=` operators on a list. However, there is a slight
 difference. `[1] + [2]` results in `[1, 2]` – the values from the second list are plucked out and placed at the end of
 the first one. However, `[1].append([2])` results in `[1, [2]]` – the second list is kept intact, and the entire thing
 gets appended to the end.
@@ -239,7 +235,7 @@ index. This does mean that it needs two values.
 ```
 
 The methods themselves don't have return values. That's because they modify the original list instead of creating a new
-one. If you try to set a variable to one of these methods, you'll get a value of `None`.
+one. If you try to reference a variable that was set to one of these methods, you'll get a value of `None`.
 
 Also, these methods are exclusive to lists. If you try using them on other value types, you'll get an `AttributeError`.
 
@@ -336,8 +332,8 @@ For example, lists can span multiple lines and can have any amount of spacing be
 as if the list is finished until it sees the closing bracket `]`.
 
 But there is something else. When splitting any kind of statement across multiple lines, you can use `\` to indicate
-that the statement extends to the next line. Some parts of the language do this automatically, but not again `\` can be
-used with **everything**.
+that the statement extends to the next line. Some parts of the language do this automatically, but not everything does.
+`\`, when used manually, can be used with **everything**.
 
 These two are identical:
 
@@ -345,7 +341,7 @@ These two are identical:
 print("This code is being split across " + \
       "multiple lines.")
 
-print("This code is being split across " + # No \ - Also, placing comments like this is valid Python
+print("This code is being split across " + # No \ placed - Also, placing comments like this is valid Python
       "multiple lines.")
 ```
 
@@ -377,6 +373,7 @@ False
 True
 "A" not in name
 True
+>>> name = "Zophie"
 >>> for i in name:
 >>>     print("* * * " + i.upper() + " * * *")
 * * * Z * * *
@@ -439,3 +436,57 @@ wanted to mutate the original list into the new one, you'd have to do something 
 Which is quite a bit more verbose, especially if you don't use loops or if you add the new elements individually.
 
 ## The Tuple Data Type
+
+Tuples are yet another way of grouping data together. However, there are a number of differences, the most obvious being
+that tuples group pieces of data within the parentheses `(` and `)`, as opposed to `[` and `]`. Like lists and strings,
+tuple values can be referenced by a specific index, but like the latter and not the former, tuples are completely
+immutable.
+
+If you have a tuple with only one value, then the interpreter will assume that it's just a value contained within
+parentheses. To prevent this, you need to place a comma after the value.
+
+```python
+# Example tuple
+x = (1,)
+```
+
+As for what they're used for, it seems that they're basically a constant version of lists. They're good for when you
+want to make it obvious that you're making a value constant without overloading the code with comments. And since the
+Python devs know that the tuple will never change, they can make some optimizations to make the interpreter run faster.
+
+## Converting between the list and tuple types with the `tuple()` and `list()` functions
+
+Just like how `int("42")` will evaluate to the integer `42` and `str(42)` will evaluate to the string `"42"`, so too can
+the `tuple()` and `list()` functions convert data values of one type into the other. `tuple()` will turn any array-based
+element (a list or a string) into a tuple. `list()`, however, will turn any tuple **or** string into a list.
+
+However, you cannot put simple primitives into these functions. If you do, you'll get a `TypeError`. Basically, anything
+you put into one of these functions must be iterable.
+
+```python
+>>> tuple([1, 2, 3])
+(1, 2, 3)
+>>> list(("A", "B", "C"))
+["A", "B", "C"]
+>>> tuple("Example")
+("E", "x", "a", "m", "p", "l", "e")
+>>> list(2)
+TypeError
+```
+
+## References
+
+All lists in Python are reference-based (tuples and strings should be as well).
+
+For a refresher, think of each variable being a box that can only hold so much. Primitive values are small enough to fit
+inside, but more complex data types like lists aren't. So, when a list gets created, what gets stored inside the
+variable is a reference to that list. When you set one variable equal to a second variable, the content gets copied
+over, but the content itself can vary. If the second variable is a primitive, then the entire primitive value can go
+inside the first. But if the second variable is a list, then the first variable will still copy the contents – they'll
+just happen to to be a reference.
+
+When you modify a list variable, the interpreter will take the reference within the variable and use it to find the
+location of the actual list. But if two separate variables have the same reference, then they share a list. Any changes
+done through one will be reflected when you reference the other.
+
+## Passing References
