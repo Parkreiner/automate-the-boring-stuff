@@ -490,3 +490,49 @@ location of the actual list. But if two separate variables have the same referen
 done through one will be reflected when you reference the other.
 
 ## Passing References
+
+It's absolutely vital that you understand references to understand how arguments get passed into functions. When you
+pass an argument into a function, that argument's value will be passed in. If the value is for a primitive, then the
+entire value can be thrown in. But if the value is a reference to something like a list or tuple, then that reference
+will get passed in. That means that any code that modifies the value the reference points to will be reflected even if
+you don't return anything.
+
+Look at this code:
+
+```python
+def addHello(y):
+    y.append("Hello!")
+
+x = ["Oh", "Oh", "Oh"]
+addHello(x)
+print(x)
+```
+
+Both `x` and `y` each have a separate reference to a list, but the references both point at the same list.
+
+## The `copy` module's `copy()` and `deepcopy()` functions
+
+Most of the time, passing list and list-like values by reference is perfectly fine. You shouldn't run into many major
+issues with them. But sometimes you need a separate copy of a list, because you're going to be making changes that you
+don't want reflected in the original. Python makes this easy via the `copy.copy()` and `copy.deepcopy()` methods.
+`copy.copy()` returns a separate copy of a reference-based value.
+
+```python
+import copy
+
+junk = [1, 2, 3, 4]
+otherJunk = copy.copy(junk)
+
+junk.append(5)
+print(otherJunk) # Still [1, 2, 3, 4]
+```
+
+Now, what's the difference between copies and deep copies? If you're only copying similar reference-based values, then
+there's zero difference. The difference only becomes relevant once you start working with compound values, such as lists
+of lists. When you use `copy.copy()` on a list of lists, it will make a copy of the main list, but it won't make any
+copies of the inner lists. So, say that you have a list of lists called `x`, use `copy.copy()` on it, and store the
+result in `y`. `x` and `y` will be separate lists, but they'll still share inner lists. That is, they'll both have
+references to the same values.
+
+By using `copy.deepcopy()`, you'll create separate copies not just of the containing list, but of every list inside it
+as well.
