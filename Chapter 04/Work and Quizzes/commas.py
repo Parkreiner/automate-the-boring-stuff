@@ -54,5 +54,4 @@ for i in range(listLength):
 
         combined += " "
 
-
 print(combined)
