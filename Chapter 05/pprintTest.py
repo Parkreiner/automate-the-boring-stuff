@@ -23,7 +23,7 @@ print(test)
 pprint.pprint(test, width=1)
 
 print(test2)
-pprint.pprint(test2)
+pprint.pprint(test2, width=1)
 
 print(test3)
-pprint.pprint(test3)
+pprint.pprint(test3, width=1)
