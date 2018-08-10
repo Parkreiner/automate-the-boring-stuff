@@ -121,7 +121,7 @@ of another string, respectively.
 True
 >>> "Cool beans".endswith("s")
 True
-"Jeff Bezos is a piece of shit.".endswith("and I wish him a truly good day")
+"Rich people are funny.".endswith("They're just like we low-income folk")
 False
 ```
 
