@@ -28,17 +28,14 @@ def main():
     }
 
     start_time = time.time()
-    display_basket_contents(picnic_basket)
+    display_basket_contents(picnic_basket, 5)
     print(f"\nProgram took {'%.5f' % (time.time() - start_time)} seconds to run.")
 
 
-def display_basket_contents(basket):    
+def display_basket_contents(basket, min_spacing=5):    
     largest_key_length = 0
     largest_value_length = 1
     value_lengths = {}
-
-    # Want a minimum of 6 dot leaders between keys and values
-    min_spacing = 6
 
     # Find largest key and value lengths
     for key, value in basket.items():

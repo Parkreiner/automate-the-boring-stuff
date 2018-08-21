@@ -2,7 +2,7 @@
 
 ## Functions
 
-sorted, int, ord, chr, list, tuple, set, dict, float
+sorted, int, ord, chr, list, tuple, set, dict, float, startswith, endswith, get_value, zip, enumerate
 
 ## Methods
 
